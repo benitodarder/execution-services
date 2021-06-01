@@ -7,7 +7,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import local.tin.tests.execution.services.threads.SampleCallable;
 import org.apache.log4j.Logger;
 
@@ -19,7 +18,7 @@ public class ExcutorCompletionServiceConceptProof {
 
     private static final Logger LOGGER = Logger.getLogger(ExcutorCompletionServiceConceptProof.class);
     private static final int THREADPOOL_SIZE = 4;
-    private static final int NUMBER_OF_TASKS = 10;
+    private static final int NUMBER_OF_TASKS = 15;
     private static final long MAX_SLEEPING_TIME = 5000;        
     /**
      * @param args the command line arguments
@@ -39,12 +38,11 @@ public class ExcutorCompletionServiceConceptProof {
         CompletionService<String> executorCompletionService= new ExecutorCompletionService<>(executorService);        
         LOGGER.info("Let's submit them to the ExecutorService");
         long t0 = System.currentTimeMillis();
-        List<Future<String>> futuresList = new ArrayList<>();
         for(int i = 0; i < NUMBER_OF_TASKS; i++) {
-            futuresList.add(executorCompletionService.submit(callables.get(i)));
+            executorCompletionService.submit(callables.get(i));
         }
         LOGGER.info("Let's wait for ExecutorService to end.");
-        for(Future current : futuresList) {
+        for(int i = 0; i < NUMBER_OF_TASKS; i++) {
             LOGGER.info(executorCompletionService.take().get());
         }
         executorService.shutdown();

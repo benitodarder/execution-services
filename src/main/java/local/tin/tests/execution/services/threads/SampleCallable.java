@@ -21,7 +21,9 @@ public class SampleCallable implements Callable {
     @Override
     public String call() throws Exception {
         long t0 = System.currentTimeMillis();
+        LOGGER.info("\tI'm " + taskName + " of " +  getClass().getSimpleName() + " started at " + t0);
         Thread.sleep(sleepTime);
+        LOGGER.info("\tI'm " + taskName + " of " +  getClass().getSimpleName() + " and slept for " + sleepTime + "ms");
         return "I'm " + taskName + " of " +  getClass().getSimpleName() + " started at " + t0 + " and I slept for " + sleepTime + "ms";
     }
 }
